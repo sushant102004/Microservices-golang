@@ -1,18 +1,7 @@
 package main
 
-import (
-	"context"
-	"fmt"
-	"log"
-)
-
 func main() {
 	svc := NewLoggingService(&priceFetcher{})
-
-	price, err := svc.FetchPrice(context.Background(), "ETH")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Price - ", price)
+	server := NewJSONServer(svc, ":3000")
+	server.Run()
 }

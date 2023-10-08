@@ -1,3 +1,7 @@
+/*
+	PoF - Implement decorator pattern and wrap core FetchPrice logic over logging service to print logs on every request.
+*/
+
 package main
 
 import (
@@ -11,6 +15,8 @@ type LoggingService struct {
 	next PriceFetcher
 }
 
+// We are able to return LoggingService because that struct implement FetchPrice function which is also implemented by PriceFetcher
+// which makes both of them compatible.
 func NewLoggingService(next PriceFetcher) PriceFetcher {
 	return &LoggingService{
 		next: next,

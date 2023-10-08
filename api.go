@@ -1,3 +1,7 @@
+/*
+	Create and start HTTP listener.
+*/
+
 package main
 
 import (
@@ -27,6 +31,9 @@ func NewJSONServer(svc PriceFetcher, listenAddr string) *JSONServer {
 }
 
 func (s *JSONServer) Run() {
+	// We can't use s.handleGetPrice directly because it do not obey the conventions of standard http handler function.
+	// So we will write a function that will accept another function and convert it into standard http function.
+
 	http.HandleFunc("/", newHTTPHandlerFunc(s.handleGetPrice))
 	http.ListenAndServe(s.listenAddr, nil)
 }

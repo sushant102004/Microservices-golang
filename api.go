@@ -9,14 +9,11 @@ import (
 	"encoding/json"
 	"math/rand"
 	"net/http"
+
+	"github.com/sushant102004/microservices/types"
 )
 
 type APIFunc func(context.Context, http.ResponseWriter, *http.Request) error
-
-type PriceResonse struct {
-	Crypto string  `json:"crypto"`
-	Price  float64 `json:"price"`
-}
 
 type JSONServer struct {
 	listenAddr string
@@ -59,7 +56,7 @@ func (s *JSONServer) handleGetPrice(ctx context.Context, w http.ResponseWriter, 
 		return err
 	}
 
-	res := &PriceResonse{
+	res := &types.PriceResonse{
 		Crypto: crypto,
 		Price:  price,
 	}

@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"net/http"
 
+	microservices "github.com/sushant102004/microservices/proto"
 	"github.com/sushant102004/microservices/types"
+	"google.golang.org/grpc"
 )
 
 type Client struct {
@@ -46,4 +48,13 @@ func (c *Client) FetchPrice(ctx context.Context, crypto string) (*types.PriceRes
 		return nil, err
 	}
 	return price, nil
+}
+
+func NewGRPCClient(targetAddr string) (microservices.PriceFetcherClient, error) {
+	conn, err := grpc.Dial(targetAddr, grpc.WithInsecure())
+	if err != nil {
+		return nil, err
+	}
+
+	return microservices.NewPriceFetcherClient(conn), nil
 }

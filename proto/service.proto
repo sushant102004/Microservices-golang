@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/sushant102004/microservices";
+
+message PriceRequest {
+    string crypto = 1;
+}
+
+message PriceResponse {
+    float price = 1;
+    string crypto = 2;
+}
+
+
+service PriceFetcher {
+    rpc FetchPrice(PriceRequest) returns (PriceResponse);
+}
